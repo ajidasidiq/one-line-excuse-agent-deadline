@@ -21,8 +21,14 @@ def main() -> None:
     assert ENTRY == ENTRY.strip() and "\n" not in ENTRY, "entry must be one line"
     out_dir = "/output"
     os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
+    path = os.path.join(out_dir, "entry.txt")
+    with open(path, "w", encoding="utf-8") as f:
         f.write(ENTRY + "\n")
+    # Echo what was written, so a local run shows the exact judged text.
+    with open(path, encoding="utf-8") as f:
+        written = f.read()
+    assert written.rstrip("\n") == ENTRY, "written entry differs from ENTRY"
+    print(f"{len(ENTRY)} chars: {ENTRY}")
 
 
 if __name__ == "__main__":
